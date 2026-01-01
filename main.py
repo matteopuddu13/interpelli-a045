@@ -16,7 +16,7 @@ for scrape in sources:
     items = scrape()
 
     for item in items:
-        url = item["url"]
+        url = item["url"].strip()
         text = (item["title"] + " " + item["content"]).lower()
 
         if url in seen:

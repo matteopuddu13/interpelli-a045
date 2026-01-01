@@ -1,6 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
+from urllib.parse import urljoin
 
+BASE = "https://www.mim.gov.it"
 URL = "https://www.mim.gov.it/web/cagliari/notizie"
 
 def scrape():
@@ -9,17 +11,19 @@ def scrape():
 
     items = []
 
-    for news in soup.select(".asset-summary"):
-        title = news.get_text(" ", strip=True)
-        link = news.find("a", href=True)
+    for a in soup.select("a[href]"):
+        text = a.get_text(" ", strip=True)
+        href = a.get("href")
 
-        if not link:
+        if not text or "interpello" not in text.lower():
             continue
 
+        full_url = urljoin(BASE, href)
+
         items.append({
-            "title": title,
-            "content": title,
-            "url": link["href"]
+            "title": text,
+            "content": text,
+            "url": full_url
         })
 
     return items

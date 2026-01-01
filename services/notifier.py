@@ -1,8 +1,8 @@
 import os
 import requests
 
-TELEGRAM_TOKEN = os.environ["7949377715:AAGjR4mAHxuObuDqIYaWz3G1GGVdhXf9hM8"]
-TELEGRAM_CHAT_ID = os.environ["1087249095"]
+TELEGRAM_TOKEN = os.environ["TELEGRAM_TOKEN"]
+TELEGRAM_CHAT_ID = os.environ["TELEGRAM_CHAT_ID"]
 
 def notify(item):
     msg = f"""🚨 INTERPELLO A045
@@ -11,8 +11,8 @@ def notify(item):
 
 🔗 {item['url']}
 """
-    url = f"https://api.telegram.org/bot{7949377715:AAGjR4mAHxuObuDqIYaWz3G1GGVdhXf9hM8}/sendMessage"
+    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
     requests.post(url, json={
-        "chat_id": 1087249095,
+        "chat_id": TELEGRAM_CHAT_ID,
         "text": msg
     })

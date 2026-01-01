@@ -1,0 +1,31 @@
+name: Interpelli A045
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - run: pip install -r requirements.txt
+
+      - run: python main.py
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.7949377715:AAGjR4mAHxuObuDqIYaWz3G1GGVdhXf9hM8 }}
+          TELEGRAM_CHAT_ID: ${{ secrets.1087249095 }}
+
+      - run: |
+          git config user.name "interpelli-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add seen.txt
+          git diff --cached --quiet || git commit -m "update seen"
+          git push

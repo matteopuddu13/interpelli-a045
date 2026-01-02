@@ -13,7 +13,11 @@ new_seen = set()
 sources = [scrape_usr, scrape_usp]
 
 for scrape in sources:
-    items = scrape()
+    try:
+        items = scrape()
+    except Exception as e:
+        print(f"[WARN] errore nello scraper {scrape.__name__}: {e}")
+        continue
 
     for item in items:
         url = item["url"].strip()
